@@ -1,0 +1,21 @@
+{
+  "n_samples": 4611,
+  "n_features": 2548,
+  "sources": [
+    "kaggle_emotions",
+    "kaggle_mental"
+  ],
+  "brain_region_order": [
+    "dmn",
+    "ecn",
+    "san",
+    "striatum",
+    "hippocampus",
+    "basal"
+  ],
+  "label_order": [
+    "valence",
+    "arousal",
+    "emotion_class"
+  ]
+}

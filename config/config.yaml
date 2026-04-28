@@ -1,0 +1,88 @@
+# ══════════════════════════════════════════════
+#  Neuro Idea Grader — Master Config
+# ══════════════════════════════════════════════
+
+project:
+  name    : "Neuro Idea Grader"
+  version : "3.0.0"
+
+datasets:
+  kaggle:
+    dataset_slug : "birdy654/eeg-brainwave-dataset-feeling-emotions"
+    filename     : "emotions.csv"
+    local_path   : "data/raw/kaggle"
+    label_col    : "label"
+    label_map    : { POSITIVE: 2, NEUTRAL: 1, NEGATIVE: 0 }
+
+  zenodo:
+    record_id  : "14787743"
+    api_url    : "https://zenodo.org/api/records/14787743"
+    local_path : "data/raw/zenodo"
+    label_map  : { happy: 3, neutral: 2, sad: 1, fear: 0, calm: 2 }
+
+signal:
+  sampling_rate : 128
+  bands:
+    delta : [0.5,  4.0]
+    theta : [4.0,  8.0]
+    alpha : [8.0, 13.0]
+    beta  : [13.0, 30.0]
+    gamma : [30.0, 50.0]
+
+# Emotiv EPOC+ 14-channel order
+channels: ["AF3","F7","F3","FC5","T7","P7","O1","O2","P8","T8","FC6","F4","F8","AF4"]
+key_channels: { F3: 2, F4: 11, T7: 4, T8: 9, P7: 5, P8: 8 }
+
+brain_regions:
+  dmn         : { name: "Default Mode Network",      weight: 0.18 }
+  ecn         : { name: "Executive Control Network", weight: 0.16 }
+  san         : { name: "Salience Network",           weight: 0.20 }
+  striatum    : { name: "Striatum / Reward",          weight: 0.25 }
+  hippocampus : { name: "Hippocampus",                weight: 0.12 }
+  basal       : { name: "Basal Ganglia",              weight: 0.09 }
+
+emotion_valence:
+  POSITIVE: 0.82
+  NEUTRAL : 0.50
+  NEGATIVE: 0.20
+  happy   : 0.85
+  neutral : 0.50
+  sad     : 0.22
+  fear    : 0.18
+  calm    : 0.55
+
+emotion_arousal:
+  POSITIVE: 0.72
+  NEUTRAL : 0.45
+  NEGATIVE: 0.62
+  happy   : 0.80
+  neutral : 0.45
+  sad     : 0.35
+  fear    : 0.78
+  calm    : 0.28
+
+model:
+  batch_size      : 8
+  epochs          : 50
+  learning_rate   : 0.001
+  val_split       : 0.20
+  test_split      : 0.10
+  seed            : 42
+  mixed_precision : true
+  mistral_model   : "mistral-small-latest"
+  text_model      : "all-MiniLM-L6-v2"
+  audio_model     : "facebook/wav2vec2-base"
+  video_model     : "openai/clip-vit-base-patch32"
+
+output:
+  score_range : [0, 100]
+  grades:
+    "A+" : 92
+    "A"  : 85
+    "A-" : 78
+    "B+" : 72
+    "B"  : 65
+    "B-" : 58
+    "C"  : 45
+    "D"  : 30
+    "F"  : 0
